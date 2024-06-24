@@ -15,10 +15,20 @@ export const renderNewProductForm = (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, price, image, category } = req.body;
-    await productService.createProduct({ name, description, price, image, category });
+    const { name, description, price, image, category, quantity } = req.body;
+    await productService.createProduct({ name, description, price, image, category, quantity });
     res.redirect('/products');
   } catch (error) {
     res.status(500).send('Error creating product');
   }
+};
+
+export const deleteAllProducts = async (req, res) => {
+    try {
+        await productService.deleteAllProducts();
+        res.redirect('/products');
+    } catch (error) {
+        console.error('Error deleting products:', error.message);
+        res.status(500).send(`Error deleting products: ${error.message}`);
+    }
 };

@@ -19,3 +19,7 @@ export const updateProduct = async (id, productData) => {
 export const deleteProduct = async (id) => {
   return await productRepository.deleteProduct(id);
 };
+
+export const deleteAllProducts = async () => {
+  return await productRepository.deleteAllProducts();
+};

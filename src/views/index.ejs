@@ -12,7 +12,7 @@
   <ul>
     <% products.forEach(product => { %>
       <li>
-        <img src="<%= product.image || '/images/default.png' %>" alt="<%= product.name %>">
+        <img src="<%= product.image || 'https://imgs.search.brave.com/65oFsI1cszj1f8cliOT7XOz82gZrC8_J5tjiTZkiRLA/rs:fit:500:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA0LzYyLzkzLzY2/LzM2MF9GXzQ2Mjkz/NjY4OV9CcEVFY3hm/Z011WVBmVGFJQU9D/MXRDRHVybXNubzdT/cC5qcGc' %>" alt="<%= product.name %>">
         <div class="details">
           <strong><%= product.name %></strong>
           <span><%= product.description %></span>
@@ -22,5 +22,8 @@
     <% }); %>
   </ul>
   <a href="/products/new">Agregar nuevo producto</a>
+  <form action="/products/deleteAll" method="POST">
+    <button type="submit">Eliminar todos los productos</button>
+  </form>
 </body>
 </html>

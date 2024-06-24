@@ -21,8 +21,8 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, price, image, category } = req.body;
-    const newProduct = await productService.createProduct({ name, description, price, image, category });
+    const { name, description, price, image, category, quantity } = req.body;
+    const newProduct = await productService.createProduct({ name, description, price, image, category, quantity });
     res.status(201).json(newProduct);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -32,8 +32,8 @@ export const createProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, image, category } = req.body;
-    const updatedProduct = await productService.updateProduct(id, { name, description, price, image, category });
+    const { name, description, price, image, category, quantity } = req.body;
+    const updatedProduct = await productService.updateProduct(id, { name, description, price, image, category, quantity });
     if (!updatedProduct) return res.status(404).json({ error: 'Product not found' });
     res.json(updatedProduct);
   } catch (error) {

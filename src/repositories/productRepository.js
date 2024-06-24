@@ -24,3 +24,7 @@ export const deleteProduct = async (id) => {
   await product.destroy();
   return product;
 };
+
+export const deleteAllProducts = async () => {
+  return await Product.destroy({ truncate: true });
+};
