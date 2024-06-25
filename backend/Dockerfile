@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:14
+FROM node:20
 
 WORKDIR /usr/src/app
 
@@ -11,6 +11,6 @@ COPY . .
 
 COPY .env .env
 
-EXPOSE 3000
+EXPOSE 4000
 
 CMD ["npm", "run", "dev"]
