@@ -1,0 +1,9 @@
+/* src/components/ProductList/ProductList.css */
+.product {
+    background: #1a1a1a;
+    color: white;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
