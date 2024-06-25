@@ -1,18 +1,31 @@
+/* eslint-disable react/prop-types */
 // src/components/AddProductForm/AddProductForm.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AddProductForm.css';
 
-// eslint-disable-next-line react/prop-types
-function AddProductForm({ onProductAdded }) {
+function AddProductForm({ product, onProductAdded, onProductUpdated }) {
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    image: '',
-    category: '',
-    quantity: ''
+    name: product ? product.name : '',
+    description: product ? product.description : '',
+    price: product ? product.price : '',
+    image: product ? product.image : '',
+    category: product ? product.category : '',
+    quantity: product ? product.quantity : ''
   });
+
+  useEffect(() => {
+    if (product) {
+      setFormData({
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        image: product.image,
+        category: product.category,
+        quantity: product.quantity
+      });
+    }
+  }, [product]);
 
   const handleChange = (e) => {
     setFormData({
@@ -23,9 +36,16 @@ function AddProductForm({ onProductAdded }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:4000/api/products', formData)
+    const url = product && product.id ? `http://localhost:4000/api/products/${product.id}` : 'http://localhost:4000/api/products';
+    const method = product && product.id ? axios.put : axios.post;
+  
+    method(url, formData)
       .then(response => {
-        onProductAdded(response.data); // Actualiza la lista de productos en el padre
+        if (product && product.id) {
+          onProductUpdated(response.data);
+        } else {
+          onProductAdded(response.data);
+        }
         // Reset form
         setFormData({
           name: '',
@@ -36,7 +56,7 @@ function AddProductForm({ onProductAdded }) {
           quantity: ''
         });
       })
-      .catch(error => console.error('Error adding product:', error));
+      .catch(error => console.error('Error saving product:', error));
   };
 
   return (
@@ -47,7 +67,7 @@ function AddProductForm({ onProductAdded }) {
       <input type="text" name="image" placeholder="URL de la imagen" value={formData.image} onChange={handleChange} />
       <input type="text" name="category" placeholder="Categoría" value={formData.category} onChange={handleChange} />
       <input type="number" name="quantity" placeholder="Cantidad" value={formData.quantity} onChange={handleChange} />
-      <button type="submit">Agregar Producto</button>
+      <button type="submit">{product ? 'Actualizar Producto' : 'Agregar Producto'}</button>
     </form>
   );
 }

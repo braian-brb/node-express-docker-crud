@@ -6,26 +6,36 @@ import './ProductList.css';
 
 function ProductList() {
   const [products, setProducts] = useState([]);
-  const [showForm, setShowForm] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null); // null cuando no hay producto seleccionado
 
   useEffect(() => {
     axios.get('http://localhost:4000/api/products')
-      .then(response => {
-        setProducts(response.data);
-      })
+      .then(response => setProducts(response.data))
       .catch(error => console.error('Error fetching products:', error));
   }, []);
 
   const handleDelete = (id) => {
     axios.delete(`http://localhost:4000/api/products/${id}`)
-      .then(() => {
-        setProducts(products.filter(product => product.id !== id));
-      })
+      .then(() => setProducts(products.filter(product => product.id !== id)))
       .catch(error => console.error('Error deleting product:', error));
   };
 
-  const addProduct = (newProduct) => {
+  const handleProductAdded = (newProduct) => {
     setProducts([...products, newProduct]);
+    setSelectedProduct(null); // Limpiar el producto seleccionado después de agregar
+  };
+
+  const handleProductUpdated = (updatedProduct) => {
+    setProducts(products.map(product => product.id === updatedProduct.id ? updatedProduct : product));
+    setSelectedProduct(null); // Limpiar el producto seleccionado después de actualizar
+  };
+
+  const handleEdit = (product) => {
+    setSelectedProduct(product); // Establecer el producto actual para editar
+  };
+
+  const handleAddProduct = () => {
+    setSelectedProduct({}); // Establecer como objeto vacío para nuevo producto
   };
 
   const getDefaultImage = () => {
@@ -40,10 +50,6 @@ function ProductList() {
 
   return (
     <main>
-      <button onClick={() => setShowForm(!showForm)} className="toggle-form-button">
-        {showForm ? 'Cerrar formulario' : 'Agregar Producto'}
-      </button>
-      {showForm && <AddProductForm onProductAdded={addProduct} />}
       {products.map(product => (
         <div key={product.id} className="product">
           <img src={product.image || getDefaultImage()} onError={handleImageError} alt={product.name} className="product-image"/>
@@ -54,12 +60,18 @@ function ProductList() {
             <button onClick={() => handleDelete(product.id)} className="action-button delete-button">
               <FaTrash />
             </button>
-            <button className="action-button edit-button">
+            <button onClick={() => handleEdit(product)} className="action-button edit-button">
               <FaEdit />
             </button>
           </div>
         </div>
       ))}
+      {selectedProduct !== null ? (
+        <AddProductForm product={selectedProduct} onProductAdded={handleProductAdded} onProductUpdated={handleProductUpdated} />
+      ) : null}
+      <button onClick={handleAddProduct} className="toggle-form-button">
+        Agregar Producto
+      </button>
     </main>
   );
 }
