@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
 
-  frontend:
-    user: root  # Esto permitirá al contenedor operar como root
-    build: ./frontend
-    container_name: react-frontend
-    ports:
-      - "6655:6655"
-    volumes:
-      - ./frontend:/usr/src/app/frontend
+  # frontend:
+  #   user: root  # Esto permitirá al contenedor operar como root
+  #   build: ./frontend
+  #   container_name: react-frontend
+  #   ports:
+  #     - "6655:6655"
+  #   volumes:
+  #     - ./frontend:/usr/src/app/frontend
 
 
   backend:

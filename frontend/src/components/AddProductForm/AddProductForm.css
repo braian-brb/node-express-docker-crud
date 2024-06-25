@@ -1,0 +1,25 @@
+/* src/components/AddProductForm/AddProductForm.css */
+.add-product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .add-product-form input,
+  .add-product-form button {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .add-product-form button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .add-product-form button:hover {
+    background-color: #45a049;
+  }
+  

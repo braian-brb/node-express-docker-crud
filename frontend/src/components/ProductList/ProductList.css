@@ -1,9 +1,51 @@
 /* src/components/ProductList/ProductList.css */
 .product {
-    background: #1a1a1a;
-    color: white;
-    margin: 20px;
-    padding: 15px;
-    border-radius: 8px;
-  }
-  
+  background: #1a1a1a;
+  color: white;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 24px;
+  margin-left: 10px;
+}
+
+.action-button:hover {
+  color: #ff4747;
+}
+
+.toggle-form-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.toggle-form-button:hover {
+  background-color: #45a049;
+}
